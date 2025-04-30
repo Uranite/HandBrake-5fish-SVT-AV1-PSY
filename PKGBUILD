@@ -4,12 +4,12 @@
 # Contributor: Sebastien Piccand <sebcactus gmail com>
 
 pkgname=(
-  'handbrake-svt-av1-psy-llvm-optimized'
-  'handbrake-svt-av1-psy-llvm-optimized-cli'
+  'handbrake-5fish-svt-av1-psy-llvm-optimized'
+  'handbrake-5fish-svt-av1-psy-llvm-optimized-cli'
 )
 
-pkgver=1.9.0
-pkgrel=2
+pkgver=1.10.2
+pkgrel=1
 arch=('x86_64')
 url="https://handbrake.fr/"
 license=(GPL-2.0-only)
@@ -61,13 +61,16 @@ makedepends=(
   'clang'
   'lld'
   'llvm'
+  'rust'
+  'cargo-c'
+  'ffnvcodec-headers'
   # AMD VCE encoding on Linux requires Vulkan
   'vulkan-headers'
   "${_commondeps[@]}"
   "${_guideps[@]}"
 )
 options=('!lto') # https://bugs.archlinux.org/task/72600
-source=("HandBrake::git+https://github.com/HandBrake/HandBrake.git" "HandBrake-SVT-AV1-PSY::git+https://github.com/Nj0be/HandBrake-SVT-AV1-PSY.git")
+source=("HandBrake::git+https://github.com/HandBrake/HandBrake.git" "HandBrake-5fish-SVT-AV1-PSY::git+https://github.com/Uranite/Handbrake-5fish-SVT-AV1-PSY.git")
 sha256sums=('SKIP' 'SKIP')
 
 pkgver() {
@@ -94,7 +97,7 @@ setup_compiler() {
 }
 
 build() {
-  ./HandBrake-SVT-AV1-PSY/patch.sh
+  ./HandBrake-5fish-SVT-AV1-PSY/patch.sh
   setup_compiler
 
   local -a CONFIGURE_OPTIONS=(
@@ -107,6 +110,8 @@ build() {
     --lto=on
     --enable-qsv
     --enable-vce
+    --enable-nvenc
+    --enable-libdovi
   )
 
   cd "${srcdir}/HandBrake" || exit
@@ -114,7 +119,7 @@ build() {
   make -C build
 }
 
-package_handbrake-svt-av1-psy-llvm-optimized() {
+package_handbrake-5fish-svt-av1-psy-llvm-optimized() {
   pkgdesc="Multithreaded video transcoder optimized with LLVM"
   depends=(
     'desktop-file-utils'
@@ -126,6 +131,7 @@ package_handbrake-svt-av1-psy-llvm-optimized() {
     'gst-plugins-good: for video previews'
     'gst-libav: for video previews'
     'intel-media-sdk: Intel QuickSync support'
+    'nvidia-utils: NVIDIA NVENC support'
     'libdvdcss: for decoding encrypted DVDs'
   )
   provides=(handbrake)
@@ -138,11 +144,12 @@ package_handbrake-svt-av1-psy-llvm-optimized() {
   rm "${pkgdir}/usr/bin/HandBrakeCLI"
 }
 
-package_handbrake-svt-av1-psy-llvm-optimized-cli() {
+package_handbrake-5fish-svt-av1-psy-llvm-optimized-cli() {
   pkgdesc="Multithreaded video transcoder optimized with LLVM (CLI)"
   depends=("${_commondeps[@]}")
   optdepends=(
     'intel-media-sdk: Intel QuickSync support'
+    'nvidia-utils: NVIDIA NVENC support'
     'libdvdcss: for decoding encrypted DVDs'
   )
   provides=(handbrake-cli)
