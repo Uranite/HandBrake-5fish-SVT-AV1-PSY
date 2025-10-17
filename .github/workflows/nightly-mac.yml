@@ -59,7 +59,7 @@ jobs:
     - name: Build HandBrake
       run: |
         cd HandBrake
-        ./configure --lto=on
+        ./configure
         cd build
         make ub && make pkg.create
 
