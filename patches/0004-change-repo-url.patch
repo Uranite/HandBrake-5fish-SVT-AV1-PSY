@@ -10,7 +10,7 @@ index 59bfc1279..b95e56a4f 100644
 -SVT-AV1.FETCH.url    += https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v4.0.1/SVT-AV1-v4.0.1.tar.gz
 -SVT-AV1.FETCH.sha256  = 9c0f9a4327334c40a76d2f39940d8a1b2dd8b1358375a11c4715d516b90a65cb
 +SVT-AV1.FETCH.url     = https://github.com/Uranite/Handbrake-5fish-SVT-AV1-PSY/releases/download/contribs/svt-av1-psy.tar.gz
-+SVT-AV1.FETCH.sha256  = 7d1b80d1b4657a0452a9940d5c8aefba44e1510218c6149ceb4873684ff448fe
++SVT-AV1.FETCH.sha256  = 44376df08466147a9cca51b4129085f0576007e08efe87f6a808184621304364
  
  SVT-AV1.GCC.args.c_std =
  
